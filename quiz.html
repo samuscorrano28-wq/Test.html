@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUiZ</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .risultato { margin-top: 10px; font-weight: bold; }
+        .corretto { color: green; }
+        .errato { color: red; }
+        #punteggio-finale { font-size: 1.3em; font-weight: bold; margin-top: 20px; color: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1 align="center">QUiZ</h1>
+    
+    <!-- Rimosso action="result.php" perché facciamo tutto qui -->
+    <form id="quizForm" onsubmit="controllaRisultati(event)">
+        
+        <div class="domanda" id="d1">
+            <p>1. What is the capital of France?</p>
+            <input type="radio" name="q1" value="a"> a) Berlin<br>
+            <input type="radio" name="q1" value="b"> b) Madrid<br>
+            <input type="radio" name="q1" value="c"> c) Paris<br>
+            <div class="risultato"></div>
+        </div>
+
+        <div class="domanda" id="d2">
+            <p>2. What is 2 + 2?</p>
+            <input type="radio" name="q2" value="a"> a) 3<br>
+            <input type="radio" name="q2" value="b"> b) 4<br>
+            <input type="radio" name="q2" value="c"> c) 5<br>
+            <div class="risultato"></div>
+        </div>
+
+        <div class="domanda" id="d3">
+            <p>3. Which planet is known as the Red Planet?</p>
+            <input type="radio" name="q3" value="a"> a) Earth<br>
+            <input type="radio" name="q3" value="b"> b) Mars<br>
+            <input type="radio" name="q3" value="c"> c) Jupiter<br>
+            <div class="risultato"></div>
+        </div>
+
+        <div class="domanda" id="d4">
+            <p>4. qual è stata la prima capitale d'Italia?</p>
+            <input type="radio" name="q4" value="a"> a) turin<br>
+            <input type="radio" name="q4" value="b"> b) Milan<br>
+            <input type="radio" name="q4" value="c"> c) Rome<br>
+            <div class="risultato"></div>
+        </div>
+
+        <div class="domanda" id="d5">
+            <p>5. When did World War I start?</p>
+            <input type="radio" name="q5" value="a"> a) 1914<br>
+            <input type="radio" name="q5" value="b"> b) 1918<br>
+            <input type="radio" name="q5" value="c"> c) 1939<br>
+            <div class="risultato"></div>
+        </div>
+
+        <div class="domanda" id="d6">
+            <p>6. Who was the first President of the United States?</p>
+            <input type="radio" name="q6" value="a"> a) John Adams<br>
+            <input type="radio" name="q6" value="b"> b) Thomas Jefferson<br>
+            <input type="radio" name="q6" value="c"> c) Donald Trump<br>
+            <div class="risultato"></div>
+        </div>
+
+        <div class="domanda" id="d7">
+            <p>7. what is the date of the United States Declaration of Independence?</p>
+            <input type="radio" name="q7" value="a"> a) July 4, 1776<br>
+            <input type="radio" name="q7" value="b"> b) July 4, 1789<br>
+            <input type="radio" name="q7" value="c"> c) July 4, 1812<br>
+            <div class="risultato"></div>
+        </div>
+
+        <div class="domanda" id="d8">
+            <p>8. When was the first FIFA World Cup held?</p>
+            <input type="radio" name="q8" value="a"> a) 1934<br>
+            <input type="radio" name="q8" value="b"> b) 1930<br>
+            <input type="radio" name="q8" value="c"> c) 1938<br>
+            <div class="risultato"></div>
+        </div>
+
+        <div class="domanda" id="d9">
+            <p>9. chi ha inventato la lampadina?</p>
+            <input type="radio" name="q9" value="a"> a) Albert Einstein <br>
+            <input type="radio" name="q9" value="b"> b) Nikola Tesla<br>
+            <input type="radio" name="q9" value="c"> c) Thomas Edison<br>
+            <div class="risultato"></div>
+        </div>
+
+        <div class="domanda" id="d10">
+            <p>10. i promessi sposi è un romanzo di?</p>
+            <input type="radio" name="q10" value="a"> a) Ugo Foscolo<br>
+            <input type="radio" name="q10" value="b"> b) Alessandro Manzoni<br>
+            <input type="radio" name="q10" value="c"> c) Gabriele D'Annunzio<br>
+            <div class="risultato"></div>
+        </div>
+
+         <br><input type="submit" value="Invia e vedi soluzioni">
+    </form>
+
+    <div id="punteggio-finale"></div>
+
+    <script>
+    function controllaRisultati(event) {
+        event.preventDefault(); // Blocca il caricamento della pagina
+
+        // Definiamo le risposte corrette
+        const soluzioni = {
+            q1: { risposta: 'c', testo: 'c) Paris' },
+            q2: { risposta: 'b', testo: 'b) 4' },
+            q3: { risposta: 'b', testo: 'b) Mars' },
+            q4: { risposta: 'a', testo: 'a) turin' },
+            q5: { risposta: 'a', testo: 'a) 1914' },
+            q6: { risposta: 'b', testo: 'b) Thomas Jefferson' }, // Adattata in base alle tue opzioni
+            q7: { risposta: 'a', testo: 'a) July 4, 1776' },
+            q8: { risposta: 'b', testo: 'b) 1930' },
+            q9: { reliability: 'c', risposta: 'c', testo: 'c) Thomas Edison' },
+            q10: { risposta: 'b', testo: 'b) Alessandro Manzoni' }
+        };
+
+        let punteggio = 0;
+        const totaleDomande = Object.keys(soluzioni).length;
+
+        // Ciclo per controllare ogni domanda
+        for (let i = 1; i <= totaleDomande; i++) {
+            const nomeInput = 'q' + i;
+            const elementoRisultato = document.querySelector(`#d${i} .risultato`);
+            const opzioneSelezionata = document.querySelector(`input[name="${nomeInput}"]:checked`);
+            
+            const rispostaCorretta = soluzioni[nomeInput].risposta;
+            const testoCorretto = soluzioni[nomeInput].testo;
+
+            if (opzioneSelezionata) {
+                const valoreUtente = opzioneSelezionata.value;
+                if (valoreUtente === rispostaCorretta) {
+                    elementoRisultato.innerHTML = `<span class="corretto">✓ Corretto!</span>`;
+                    punteggio++;
+                } else {
+                    elementoRisultato.innerHTML = `<span class="errato">✗ Errato. Risposta corretta: ${testoCorretto}</span>`;
+                }
+            } else {
+                elementoRisultato.innerHTML = `<span class="errato">⚠ Non hai risposto. Risposta corretta: ${testoCorretto}</span>`;
+            }
+        }
+
+        // Mostra il punteggio totale in fondo
+        document.getElementById('punteggio-finale').innerHTML = `Hai totalizzato ${punteggio} punti su ${totaleDomande}!`;
+    }
+    </script>
+</body>
+</html>
